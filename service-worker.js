@@ -1,41 +1,27 @@
-// youtube-pwa/service-worker.js
-const NAME = "ytpwa-v1";
-const BASE = "/youtube-pwa";
+const CACHE_NAME = "yt-pwa-v3"; // bump version to force refresh
 const ASSETS = [
-  `${BASE}/`,
-  `${BASE}/index.html`,
-  `${BASE}/manifest.json`,
-  `${BASE}/icon-192.png`,
-  `${BASE}/icon-512.png`
+  "./",
+  "./index.html",
+  "./icon-192.png?v=3",
+  "./manifest.json?v=3"
 ];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(NAME).then((cache) => cache.addAll(ASSETS))
+self.addEventListener("install", e=>{
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS))
   );
-  self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k === NAME ? null : caches.delete(k))))
+self.addEventListener("activate", e=>{
+  e.waitUntil(
+    caches.keys().then(keys=>
+      Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))
     )
   );
-  self.clients.claim();
 });
 
-self.addEventListener("fetch", (event) => {
-  const { request } = event;
-
-  // Only handle GET
-  if (request.method !== "GET") return;
-
-  // Cache-first for same-origin assets under /youtube-pwa
-  if (new URL(request.url).origin === self.location.origin &&
-      new URL(request.url).pathname.startsWith(BASE)) {
-    event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request))
-    );
-  }
+self.addEventListener("fetch", e=>{
+  e.respondWith(
+    caches.match(e.request).then(res=> res || fetch(e.request))
+  );
 });
