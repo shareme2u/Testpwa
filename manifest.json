@@ -1,6 +1,6 @@
 {
-  "name": "YouTube PWA Player1",
-  "short_name": "YT Player1",
+  "name": "YouTube PWA Player",
+  "short_name": "YT Player",
   "start_url": "/Testpwa/?source=pwa",
   "scope": "/Testpwa/",
   "display": "standalone",
@@ -9,18 +9,18 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/youtube-pwa/icon-192.jpg",
+      "src": "/Testpwa/icon-192.png",
       "sizes": "192x192",
       "type": "image/jpg"
     },
     {
-      "src": "/youtube-pwa/icon-512.jpg",
+      "src": "/Testpwa/icon-512.png",
       "sizes": "512x512",
       "type": "image/jpg"
     }
   ],
   "share_target": {
-    "action": "/youtube-pwa/",
+    "action": "/Testpwa/",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {
