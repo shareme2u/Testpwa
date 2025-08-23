@@ -1,4 +1,4 @@
-// youtube-pwa/service-worker.js
+// Testpwa/service-worker.js
 const NAME = "ytpwa-v1";
 const BASE = "/testpwa";
 const ASSETS = [
