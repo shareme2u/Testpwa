@@ -10,143 +10,43 @@
 <style>
 :root { color-scheme: dark; }
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow: hidden;
-}
+body { margin:0; background:#000; color:#fff; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; display:flex; flex-direction:column; min-height:100vh; overflow:hidden; }
+header { display:flex; align-items:center; gap:.5rem; padding:.75rem 1rem; background:#111; border-bottom:1px solid #222; }
+header h1 { margin:0; font-size:1.1rem; font-weight:600; }
+.controls { display:flex; gap:.5rem; padding:.5rem 1rem; }
+input[type="url"] { flex:1; padding:.5rem .75rem; border-radius:.5rem; border:1px solid #333; background:#121212; color:#fff; outline:none; }
+button { padding:.5rem .75rem; border:0; border-radius:.5rem; background:#e62117; color:#fff; font-weight:600; cursor:pointer; }
+button.secondary { background:#2a2a2a; }
+button:disabled { opacity:.6; cursor:not-allowed; }
 
-header {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .75rem 1rem;
-  background: #111;
-  border-bottom: 1px solid #222;
-}
-header h1 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+.player-wrap { width:100%; aspect-ratio:16/9; background:#000; border-radius:1rem; overflow:hidden; border:1px solid #222; margin:0 1rem; position:relative; }
+#player { width:100%; height:100%; border:0; display:block; }
+#resumeOverlay { position:absolute; top:8px; left:8px; background:rgba(0,0,0,0.6); color:#fff; font-size:.85rem; padding:2px 6px; border-radius:4px; pointer-events:none; }
 
-.controls {
-  display: flex;
-  gap: .5rem;
-  padding: .5rem 1rem;
-}
-input[type="url"] {
-  flex: 1;
-  padding: .5rem .75rem;
-  border-radius: .5rem;
-  border: 1px solid #333;
-  background: #121212;
-  color: #fff;
-  outline: none;
-}
-button {
-  padding: .5rem .75rem;
-  border: 0;
-  border-radius: .5rem;
-  background: #e62117;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-button.secondary { background: #2a2a2a; }
-button:disabled { opacity: .6; cursor: not-allowed; }
+#historyList { display:flex; flex-direction:column; gap:.5rem; overflow-y:auto; max-height:35vh; padding:0.5rem 1rem; }
+#historyList::-webkit-scrollbar { width:8px; }
+#historyList::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
 
-.player-wrap {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: #000;
-  border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid #222;
-  margin: 0 1rem;
-  position: relative;
-}
-#player { width: 100%; height: 100%; border: 0; display: block; }
-#resumeOverlay {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-size: 0.85rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-  pointer-events: none;
-}
+#installBtn { width:95%; font-size:1.2rem; font-weight:bold; padding:1rem; margin:0.5rem auto; display:block; border-radius:1rem; text-align:center; background:#e62117; color:#fff; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.5); }
 
-#historyList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  overflow-y: auto;
-  max-height: 35vh;
-  padding: 0.5rem 1rem;
-}
-#historyList::-webkit-scrollbar { width: 8px; }
-#historyList::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
-
-.history-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #222;
-  color: #fff;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-}
-.history-btn img { border-radius: 4px; object-fit: cover; width: 80px; height: 45px; }
-.title-scroll {
-  overflow: hidden;
-  white-space: nowrap;
-  display: block;
-}
-.title-scroll span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scrollTitle 10s linear infinite;
-}
-@keyframes scrollTitle { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-#installBtn {
-  width: 95%;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 1rem;
-  margin: 0.5rem auto;
-  display: block;
-  border-radius: 1rem;
-  text-align: center;
-  background: #e62117;
-  color: #fff;
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
+.history-btn { display:flex; align-items:center; gap:.5rem; background:#222; color:#fff; padding:.25rem .5rem; border-radius:.5rem; border:none; cursor:pointer; }
+.history-btn img { border-radius:4px; object-fit:cover; width:80px; height:45px; }
+.title-scroll { overflow:hidden; white-space:nowrap; display:block; }
+.title-scroll span { display:inline-block; padding-left:100%; animation:scrollTitle 10s linear infinite; }
+@keyframes scrollTitle { 0% { transform:translateX(0); } 100% { transform:translateX(-100%); } }
 </style>
 </head>
 <body>
 
 <header>
-  <img src="/Testpwa/icon-192.png" alt="Testpwa" width="28" height="28" style="border-radius:6px" />
+  <img src="/Testpwa/icon-192.png" alt="Testpwa" width="28" height="28" style="border-radius:6px"/>
   <h1>Testpwa Player</h1>
 </header>
 
 <div class="controls">
   <input id="urlInput" type="url" placeholder="Paste YouTube URL…" />
   <button id="playBtn">Play</button>
-  <button id="pipBtn" class="secondary">PiP</button>
-  <button id="fsBtn" class="secondary">FS</button>
+  <button id="pauseBtn" class="secondary">Pause</button>
 </div>
 
 <div class="player-wrap">
@@ -154,155 +54,120 @@ button:disabled { opacity: .6; cursor: not-allowed; }
   <div id="resumeOverlay">0s</div>
 </div>
 
-<div id="historyList"></div>
+<audio id="ytAudio" controls style="width:95%; margin:1rem auto; display:none;"></audio>
 
+<div id="historyList"></div>
 <button id="installBtn" class="secondary" hidden>Install Testpwa</button>
 
 <script>
+// Elements
 const urlInput = document.getElementById("urlInput");
 const playBtn = document.getElementById("playBtn");
-const pipBtn = document.getElementById("pipBtn");
-const fsBtn = document.getElementById("fsBtn");
+const pauseBtn = document.getElementById("pauseBtn");
 const iframe = document.getElementById("player");
-const installBtn = document.getElementById("installBtn");
+const audio = document.getElementById("ytAudio");
 const resumeOverlay = document.getElementById("resumeOverlay");
 
 const HISTORY_KEY = "testpwa_history";
-
 function getHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY))||[] }catch{return[]} }
 function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
-
-function addToHistory(id, time=0){
-  const h = getHistory();
-  const idx = h.findIndex(v=>v.id===id);
-  if(idx>=0) h.splice(idx,1);
-  h.unshift({id,time});
-  if(h.length>20) h.pop();
-  saveHistory(h);
-  renderHistory();
+function addToHistory(id){ 
+  const h=getHistory(); const idx=h.indexOf(id); if(idx>=0) h.splice(idx,1); h.unshift(id); if(h.length>20) h.pop(); saveHistory(h); renderHistory();
 }
 
 function extractVideoId(url){
-  if(!url) return null;
-  try{
-    const re=/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const m=url.match(re);
-    if(m&&m[1]) return m[1];
-    const u=new URL(url);
-    const v=u.searchParams.get("v");
-    if(v&&v.length===11) return v;
-  }catch{}
-  if(/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-  return null;
+  try{ const re=/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/; const m=url.match(re); if(m&&m[1]) return m[1]; const u=new URL(url); const v=u.searchParams.get("v"); if(v&&v.length===11) return v;}catch{} 
+  if(/^[a-zA-Z0-9_-]{11}$/.test(url)) return url; return null;
 }
 
-function loadVideoFromUrl(u){
-  const id=extractVideoId(u);
-  if(!id) return alert("Invalid YouTube link.");
-  urlInput.value="";
-  loadVideoFromId(id);
+function getAudioUrl(videoId){
+  return `https://invidious.snopyta.org/latest_version?id=${videoId}&itag=140`; // audio-only
 }
 
-function loadVideoFromId(id){
-  const history=getHistory();
-  const video=history.find(v=>v.id===id);
-  const startTime=video?.time||0;
-  iframe.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1&start=${startTime}`;
+// Load video normally
+function loadVideo(id){
+  iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+  addToHistory(id);
   resumeOverlay.textContent = '0s';
-  addToHistory(id,startTime);
 }
 
-async function fetchVideoTitle(videoId){
-  try{
-    const res=await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
-    const data=await res.json();
-    return data.title||videoId;
-  }catch{return videoId}
+// Play audio fallback
+function playAudioFallback(id){
+  const audioUrl = getAudioUrl(id);
+  audio.src = audioUrl;
+  audio.style.display = 'block';
+  audio.play();
+  iframe.style.display = 'none';
+
+  // Media Session API for lock screen
+  if('mediaSession' in navigator){
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: `Video ${id}`,
+      artist: 'YouTube Audio',
+      album: 'Testpwa',
+      artwork:[{src:'/Testpwa/icon-192.png', sizes:'192x192', type:'image/png'}]
+    });
+    navigator.mediaSession.setActionHandler('play', ()=>audio.play());
+    navigator.mediaSession.setActionHandler('pause', ()=>audio.pause());
+    navigator.mediaSession.setActionHandler('seekbackward', ()=>{audio.currentTime-=10});
+    navigator.mediaSession.setActionHandler('seekforward', ()=>{audio.currentTime+=10});
+  }
 }
 
+// Resume normal video when screen active
+function resumeVideo(id){
+  audio.pause();
+  audio.style.display='none';
+  iframe.style.display='block';
+}
+
+// Play button logic
+playBtn.addEventListener('click',()=>{
+  const url = urlInput.value.trim();
+  const id = extractVideoId(url);
+  if(!id) return alert('Invalid URL');
+  loadVideo(id);
+});
+
+// Pause button
+pauseBtn.addEventListener('click',()=>{
+  if(audio.style.display==='block') audio.pause();
+  else iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
+});
+
+// Detect visibility change (screen lock / background)
+document.addEventListener('visibilitychange',()=>{
+  const h=getHistory(); if(!h[0]) return; const currentId=h[0];
+  if(document.hidden){ playAudioFallback(currentId); } // background: audio only
+  else{ resumeVideo(currentId); } // foreground: normal iframe
+});
+
+// Render history
 async function renderHistory(){
-  const history=getHistory();
-  const container=document.getElementById("historyList");
-  container.innerHTML="";
-  for(const v of history){
+  const h=getHistory(); const container=document.getElementById("historyList");
+  container.innerHTML='';
+  for(const id of h){
     const btn=document.createElement("button");
     btn.className="history-btn";
-    const thumb=document.createElement("img");
-    thumb.src=`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`;
-    const titleScroll=document.createElement("div");
-    titleScroll.className="title-scroll";
-    const span=document.createElement("span");
-    span.textContent=await fetchVideoTitle(v.id);
+    const thumb=document.createElement("img"); thumb.src=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    const titleScroll=document.createElement("div"); titleScroll.className='title-scroll';
+    const span=document.createElement("span"); span.textContent=id;
     titleScroll.appendChild(span);
-    btn.appendChild(thumb);
-    btn.appendChild(titleScroll);
-    btn.addEventListener("click",()=>loadVideoFromId(v.id));
+    btn.appendChild(thumb); btn.appendChild(titleScroll);
+    btn.addEventListener('click',()=>loadVideo(id));
     container.appendChild(btn);
   }
 }
-
-// Update resume overlay every 5 seconds
-setInterval(()=>{
-  const h=getHistory();
-  if(!iframe.src) return;
-  const idMatch=iframe.src.match(/embed\/([a-zA-Z0-9_-]{11})/);
-  if(!idMatch) return;
-  const id=idMatch[1];
-  let video=h.find(v=>v.id===id);
-  if(video){
-    video.time=(video.time||0)+5;
-    saveHistory(h);
-    resumeOverlay.textContent=video.time+'s';
-  }
-},5000);
-
-playBtn.addEventListener("click",()=>loadVideoFromUrl(urlInput.value.trim()));
-urlInput.addEventListener("keydown",e=>{ if(e.key==='Enter') loadVideoFromUrl(urlInput.value.trim()); });
-urlInput.addEventListener("paste",()=>setTimeout(()=>loadVideoFromUrl(urlInput.value.trim()),60));
-
-fsBtn.addEventListener("click",()=>{
-  if(iframe.requestFullscreen) iframe.requestFullscreen();
-  else if(iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-});
-
-pipBtn.addEventListener("click",async()=>{
-  try{ await iframe.requestPictureInPicture(); }
-  catch{ alert("Picture-in-Picture not supported."); }
-});
+renderHistory();
 
 // Install button logic
-function updateInstallButton() {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  const installedFlag = localStorage.getItem('pwa_installed');
-  installBtn.hidden = isStandalone || installedFlag === 'yes';
-}
+const installBtn=document.getElementById('installBtn');
+function updateInstallButton(){ const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; const installedFlag = localStorage.getItem('pwa_installed'); installBtn.hidden = isStandalone || installedFlag === 'yes'; }
 updateInstallButton();
-
-let deferredPrompt = null;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.hidden = false;
-});
-
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const choice = await deferredPrompt.userChoice;
-  if (choice.outcome === "accepted") {
-    installBtn.hidden = true;
-    localStorage.setItem('pwa_installed', 'yes');
-  }
-  deferredPrompt = null;
-});
-
-window.addEventListener('appinstalled', () => {
-  installBtn.hidden = true;
-  localStorage.setItem('pwa_installed', 'yes');
-});
-
-// Load history initially
-renderHistory();
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; installBtn.hidden=false; });
+installBtn.addEventListener('click',async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const choice = await deferredPrompt.userChoice; if(choice.outcome==='accepted'){ installBtn.hidden=true; localStorage.setItem('pwa_installed','yes'); } deferredPrompt=null; });
+window.addEventListener('appinstalled',()=>{ installBtn.hidden=true; localStorage.setItem('pwa_installed','yes'); });
 </script>
 </body>
 </html>
