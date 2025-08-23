@@ -1,6 +1,6 @@
 {
-  "name": "YouTube PWA Player",
-  "short_name": "YT Player",
+  "name": "Testpwa Player",
+  "short_name": "Testpwa",
   "start_url": "/Testpwa/?source=pwa",
   "scope": "/Testpwa/",
   "display": "standalone",
@@ -11,22 +11,12 @@
     {
       "src": "/Testpwa/icon-192.png",
       "sizes": "192x192",
-      "type": "image/jpg"
+      "type": "image/png"
     },
     {
       "src": "/Testpwa/icon-192.png",
       "sizes": "512x512",
-      "type": "image/jpg"
+      "type": "image/png"
     }
-  ],
-  "share_target": {
-    "action": "/Testpwa/",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  }
+  ]
 }
