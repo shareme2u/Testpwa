@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>YouTube PWA Player</title>
-<link rel="manifest" href="./manifest.json?v=3" /> <!-- cache-busting with version -->
+<link rel="manifest" href="./manifest.json" />
 <meta name="theme-color" content="#000000" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <style>
@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
+
 header {
   display: flex;
   align-items: center;
@@ -35,7 +36,7 @@ header h1 { margin: 0; font-size: 1.1rem; font-weight: 600; }
   gap: .5rem;
   padding: .5rem 1rem;
 }
-input[type="url"], input[type="search"] {
+input[type="url"] {
   flex: 1;
   padding: .5rem .75rem;
   border-radius: .5rem;
@@ -79,7 +80,7 @@ button:disabled { opacity: .6; cursor: not-allowed; }
   pointer-events: none;
 }
 
-#historyList, #searchResults {
+#historyList {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -87,10 +88,10 @@ button:disabled { opacity: .6; cursor: not-allowed; }
   max-height: 35vh;
   padding: 0.5rem 1rem;
 }
-#historyList::-webkit-scrollbar, #searchResults::-webkit-scrollbar { width: 8px; }
-#historyList::-webkit-scrollbar-thumb, #searchResults::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+#historyList::-webkit-scrollbar { width: 8px; }
+#historyList::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
 
-.history-btn, .search-btn {
+.history-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -101,7 +102,7 @@ button:disabled { opacity: .6; cursor: not-allowed; }
   border: none;
   cursor: pointer;
 }
-.history-btn img, .search-btn img { border-radius: 4px; object-fit: cover; width: 80px; height: 45px; }
+.history-btn img { border-radius: 4px; object-fit: cover; width: 80px; height: 45px; }
 .title-scroll {
   overflow: hidden;
   white-space: nowrap;
@@ -137,7 +138,7 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 <body>
 
 <header>
-  <img src="./icon-192.jpg?v=3" alt="" width="28" height="28" style="border-radius:6px" />
+  <img src="./icon-192.png" alt="" width="28" height="28" style="border-radius:6px" />
   <h1>YouTube PWA Player</h1>
 </header>
 
@@ -148,17 +149,11 @@ button:disabled { opacity: .6; cursor: not-allowed; }
   <button id="fsBtn" class="secondary">FS</button>
 </div>
 
-<div class="controls">
-  <input id="searchInput" type="search" placeholder="Search YouTube videos…" />
-  <button id="searchBtn">Search</button>
-</div>
-
 <div class="player-wrap">
   <iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
   <div id="resumeOverlay">0s</div>
 </div>
 
-<div id="searchResults"></div>
 <div id="historyList"></div>
 
 <button id="installBtn" class="secondary" hidden>Install YouTube PWA</button>
@@ -171,9 +166,6 @@ const fsBtn = document.getElementById("fsBtn");
 const iframe = document.getElementById("player");
 const installBtn = document.getElementById("installBtn");
 const resumeOverlay = document.getElementById("resumeOverlay");
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
-const searchResults = document.getElementById("searchResults");
 
 const HISTORY_KEY = "yt_history";
 function getHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY))||[] }catch{return[]} }
@@ -206,7 +198,7 @@ function extractVideoId(url){
 function loadVideoFromUrl(u){
   const id=extractVideoId(u);
   if(!id) return alert("Invalid YouTube link.");
-  urlInput.value="";
+  urlInput.value=""; // clear URL after play
   loadVideoFromId(id);
 }
 
@@ -247,37 +239,7 @@ async function renderHistory(){
   }
 }
 
-// --- YouTube search (using noembed proxy) ---
-async function searchVideos(query){
-  searchResults.innerHTML="Searching...";
-  try{
-    // Using DuckDuckGo as fallback since YouTube API needs a key
-    const res=await fetch(`https://ddg-api.herokuapp.com/search?query=${encodeURIComponent(query+" site:youtube.com")}&limit=5`);
-    const data=await res.json();
-    searchResults.innerHTML="";
-    data.results.forEach(r=>{
-      const id=extractVideoId(r.link);
-      if(!id) return;
-      const btn=document.createElement("button");
-      btn.className="search-btn";
-      const thumb=document.createElement("img");
-      thumb.src=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-      const title=document.createElement("span");
-      title.textContent=r.title;
-      btn.appendChild(thumb);
-      btn.appendChild(title);
-      btn.addEventListener("click",()=>loadVideoFromId(id));
-      searchResults.appendChild(btn);
-    });
-  }catch(err){
-    searchResults.innerHTML="Error fetching results.";
-  }
-}
-
-searchBtn.addEventListener("click",()=>searchVideos(searchInput.value.trim()));
-searchInput.addEventListener("keydown",e=>{ if(e.key==='Enter') searchVideos(searchInput.value.trim()); });
-
-// Resume overlay
+// Update resume overlay
 setInterval(()=>{
   const h=getHistory();
   if(!iframe.src) return;
@@ -339,12 +301,6 @@ window.addEventListener('appinstalled', () => {
 
 // Load history initially
 renderHistory();
-</script>
-<script>
-// Register service worker with cache-busting
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("./sw.js?v=3").then(()=>console.log("SW registered"));
-}
 </script>
 </body>
 </html>
