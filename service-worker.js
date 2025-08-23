@@ -1,12 +1,13 @@
-// Testpwa/service-worker.js
+// /Testpwa/service-worker.js
 const NAME = "ytpwa-v1";
-const BASE = "/testpwa";
+const BASE = "/Testpwa";
 const ASSETS = [
   `${BASE}/`,
   `${BASE}/index.html`,
   `${BASE}/manifest.json`,
   `${BASE}/icon-192.png`,
-  `${BASE}/icon-512.png`
+  `${BASE}/icon-512.png`,
+  `${BASE}/service-worker.js`
 ];
 
 self.addEventListener("install", (event) => {
@@ -31,11 +32,11 @@ self.addEventListener("fetch", (event) => {
   // Only handle GET
   if (request.method !== "GET") return;
 
-  // Cache-first for same-origin assets under /youtube-pwa
+  // Cache-first for same-origin assets under /Testpwa
   if (new URL(request.url).origin === self.location.origin &&
       new URL(request.url).pathname.startsWith(BASE)) {
     event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request))
+      caches.match(request).then((cached) => cached || fetch(request).catch(() => caches.match(`${BASE}/index.html`)))
     );
   }
 });
