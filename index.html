@@ -8,123 +8,114 @@
 <meta name="theme-color" content="#000000" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <style>
-:root { color-scheme: dark; }
-* { box-sizing: border-box; }
-body { margin:0; background:#000; color:#fff; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; display:flex; flex-direction:column; min-height:100vh; overflow:hidden; }
-header { display:flex; align-items:center; gap:.5rem; padding:.75rem 1rem; background:#111; border-bottom:1px solid #222; }
-header h1 { margin:0; font-size:1.1rem; font-weight:600; }
-.controls { display:flex; gap:.5rem; padding:.5rem 1rem; }
-input[type="url"] { flex:1; padding:.5rem .75rem; border-radius:.5rem; border:1px solid #333; background:#121212; color:#fff; outline:none; }
-button { padding:.5rem .75rem; border:0; border-radius:.5rem; background:#e62117; color:#fff; font-weight:600; cursor:pointer; }
-button.secondary { background:#2a2a2a; }
-button:disabled { opacity:.6; cursor:not-allowed; }
+body{margin:0;background:#000;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column;min-height:100vh;}
+header{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#111;border-bottom:1px solid #222;}
+header h1{margin:0;font-size:1.1rem;font-weight:600;}
+.controls{display:flex;gap:.5rem;padding:.5rem 1rem;}
+input[type="url"]{flex:1;padding:.5rem .75rem;border-radius:.5rem;border:1px solid #333;background:#121212;color:#fff;outline:none;}
+button{padding:.5rem .75rem;border:0;border-radius:.5rem;background:#e62117;color:#fff;font-weight:600;cursor:pointer;}
+button.secondary{background:#2a2a2a;}
+button:disabled{opacity:.6;cursor:not-allowed;}
 
-.player-wrap { width:100%; aspect-ratio:16/9; background:#000; border-radius:1rem; overflow:hidden; border:1px solid #222; margin:0 1rem; position:relative; }
-#player { width:100%; height:100%; border:0; display:block; }
-#resumeOverlay { position:absolute; top:8px; left:8px; background:rgba(0,0,0,0.6); color:#fff; font-size:.85rem; padding:2px 6px; border-radius:4px; pointer-events:none; }
+.player-wrap{width:100%;aspect-ratio:16/9;background:#000;border-radius:1rem;overflow:hidden;border:1px solid #222;margin:0 1rem;position:relative;}
+#player{width:100%;height:100%;border:0;display:block;}
+#resumeOverlay{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:.85rem;padding:2px 6px;border-radius:4px;pointer-events:none;}
 
-#historyList { display:flex; flex-direction:column; gap:.5rem; overflow-y:auto; max-height:35vh; padding:0.5rem 1rem; }
-#historyList::-webkit-scrollbar { width:8px; }
-#historyList::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
+#historyList{display:flex;flex-direction:column;gap:.5rem;overflow-y:auto;max-height:35vh;padding:.5rem 1rem;}
+#historyList::-webkit-scrollbar{width:8px;}
+#historyList::-webkit-scrollbar-thumb{background:#555;border-radius:4px;}
 
-#installBtn { width:95%; font-size:1.2rem; font-weight:bold; padding:1rem; margin:0.5rem auto; display:block; border-radius:1rem; text-align:center; background:#e62117; color:#fff; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.5); }
+#installBtn{width:95%;font-size:1.2rem;font-weight:bold;padding:1rem;margin:.5rem auto;display:block;border-radius:1rem;text-align:center;background:#e62117;color:#fff;position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.5);}
 
-.history-btn { display:flex; align-items:center; gap:.5rem; background:#222; color:#fff; padding:.25rem .5rem; border-radius:.5rem; border:none; cursor:pointer; }
-.history-btn img { border-radius:4px; object-fit:cover; width:80px; height:45px; }
-.title-scroll { overflow:hidden; white-space:nowrap; display:block; }
-.title-scroll span { display:inline-block; padding-left:100%; animation:scrollTitle 10s linear infinite; }
-@keyframes scrollTitle { 0% { transform:translateX(0); } 100% { transform:translateX(-100%); } }
+.history-btn{display:flex;align-items:center;gap:.5rem;background:#222;color:#fff;padding:.25rem .5rem;border-radius:.5rem;border:none;cursor:pointer;}
+.history-btn img{border-radius:4px;object-fit:cover;width:80px;height:45px;}
+.title-scroll{overflow:hidden;white-space:nowrap;display:block;}
+.title-scroll span{display:inline-block;padding-left:100%;animation:scrollTitle 10s linear infinite;}
+@keyframes scrollTitle{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 </style>
 </head>
 <body>
 
 <header>
-  <img src="/Testpwa/icon-192.png" alt="Testpwa" width="28" height="28" style="border-radius:6px"/>
-  <h1>Testpwa Player</h1>
+<img src="/Testpwa/icon-192.png" alt="Testpwa" width="28" height="28" style="border-radius:6px"/>
+<h1>Testpwa Player</h1>
 </header>
 
 <div class="controls">
-  <input id="urlInput" type="url" placeholder="Paste YouTube URL…" />
-  <button id="playBtn">Play</button>
-  <button id="pauseBtn" class="secondary">Pause</button>
+<input id="urlInput" type="url" placeholder="Paste YouTube URL…"/>
+<button id="playBtn">Play</button>
+<button id="pauseBtn" class="secondary">Pause</button>
+<button id="pipBtn" class="secondary">PiP</button>
 </div>
 
 <div class="player-wrap">
-  <iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
-  <div id="resumeOverlay">0s</div>
+<iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+<div id="resumeOverlay">0s</div>
 </div>
 
-<audio id="ytAudio" controls style="width:95%; margin:1rem auto; display:none;"></audio>
+<audio id="ytAudio" controls style="width:95%;margin:1rem auto;display:none;"></audio>
 
 <div id="historyList"></div>
 <button id="installBtn" class="secondary" hidden>Install Testpwa</button>
 
 <script>
-// Elements
-const urlInput = document.getElementById("urlInput");
-const playBtn = document.getElementById("playBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const iframe = document.getElementById("player");
-const audio = document.getElementById("ytAudio");
-const resumeOverlay = document.getElementById("resumeOverlay");
+const urlInput=document.getElementById("urlInput");
+const playBtn=document.getElementById("playBtn");
+const pauseBtn=document.getElementById("pauseBtn");
+const pipBtn=document.getElementById("pipBtn");
+const iframe=document.getElementById("player");
+const audio=document.getElementById("ytAudio");
+const resumeOverlay=document.getElementById("resumeOverlay");
 
-const HISTORY_KEY = "testpwa_history";
-function getHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY))||[] }catch{return[]} }
-function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
-function addToHistory(id){ 
-  const h=getHistory(); const idx=h.indexOf(id); if(idx>=0) h.splice(idx,1); h.unshift(id); if(h.length>20) h.pop(); saveHistory(h); renderHistory();
-}
+const HISTORY_KEY="testpwa_history";
+function getHistory(){try{return JSON.parse(localStorage.getItem(HISTORY_KEY))||[]}catch{return[]}}
+function saveHistory(h){localStorage.setItem(HISTORY_KEY,JSON.stringify(h))}
+function addToHistory(id){const h=getHistory();const idx=h.indexOf(id);if(idx>=0) h.splice(idx,1);h.unshift(id);if(h.length>20) h.pop();saveHistory(h);renderHistory()}
 
-function extractVideoId(url){
-  try{ const re=/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/; const m=url.match(re); if(m&&m[1]) return m[1]; const u=new URL(url); const v=u.searchParams.get("v"); if(v&&v.length===11) return v;}catch{} 
-  if(/^[a-zA-Z0-9_-]{11}$/.test(url)) return url; return null;
-}
+function extractVideoId(url){try{const re=/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;const m=url.match(re);if(m&&m[1]) return m[1];const u=new URL(url);const v=u.searchParams.get("v");if(v&&v.length===11) return v}catch{} if(/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;return null;}
 
-function getAudioUrl(videoId){
-  return `https://invidious.snopyta.org/latest_version?id=${videoId}&itag=140`; // audio-only
-}
+function getAudioUrl(videoId){return `https://invidious.snopyta.org/latest_version?id=${videoId}&itag=140`}
 
-// Load video normally
+// Load normal video
 function loadVideo(id){
-  iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+  iframe.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+  iframe.style.display='block';
+  audio.style.display='none';
   addToHistory(id);
-  resumeOverlay.textContent = '0s';
+  resumeOverlay.textContent='0s';
 }
 
 // Play audio fallback
 function playAudioFallback(id){
-  const audioUrl = getAudioUrl(id);
-  audio.src = audioUrl;
-  audio.style.display = 'block';
+  audio.src=getAudioUrl(id);
+  audio.style.display='block';
   audio.play();
-  iframe.style.display = 'none';
-
-  // Media Session API for lock screen
+  iframe.style.display='none';
   if('mediaSession' in navigator){
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: `Video ${id}`,
-      artist: 'YouTube Audio',
-      album: 'Testpwa',
-      artwork:[{src:'/Testpwa/icon-192.png', sizes:'192x192', type:'image/png'}]
+    navigator.mediaSession.metadata=new MediaMetadata({
+      title:`Video ${id}`,
+      artist:'YouTube Audio',
+      album:'Testpwa',
+      artwork:[{src:'/Testpwa/icon-192.png',sizes:'192x192',type:'image/png'}]
     });
-    navigator.mediaSession.setActionHandler('play', ()=>audio.play());
-    navigator.mediaSession.setActionHandler('pause', ()=>audio.pause());
-    navigator.mediaSession.setActionHandler('seekbackward', ()=>{audio.currentTime-=10});
-    navigator.mediaSession.setActionHandler('seekforward', ()=>{audio.currentTime+=10});
+    navigator.mediaSession.setActionHandler('play',()=>audio.play());
+    navigator.mediaSession.setActionHandler('pause',()=>audio.pause());
+    navigator.mediaSession.setActionHandler('seekbackward',()=>audio.currentTime-=10);
+    navigator.mediaSession.setActionHandler('seekforward',()=>audio.currentTime+=10);
   }
 }
 
-// Resume normal video when screen active
+// Resume normal video
 function resumeVideo(id){
   audio.pause();
   audio.style.display='none';
   iframe.style.display='block';
 }
 
-// Play button logic
+// Play button
 playBtn.addEventListener('click',()=>{
-  const url = urlInput.value.trim();
-  const id = extractVideoId(url);
+  const url=urlInput.value.trim();
+  const id=extractVideoId(url);
   if(!id) return alert('Invalid URL');
   loadVideo(id);
 });
@@ -135,11 +126,29 @@ pauseBtn.addEventListener('click',()=>{
   else iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
 });
 
-// Detect visibility change (screen lock / background)
-document.addEventListener('visibilitychange',()=>{
+// Manual PiP
+pipBtn.addEventListener('click',async()=>{
+  try{
+    if(iframe.requestPictureInPicture) await iframe.requestPictureInPicture();
+    else alert('PiP not supported on this device.');
+  }catch(e){alert('PiP error:'+e.message)}
+});
+
+// Auto PiP / background fallback
+document.addEventListener('visibilitychange', async()=>{
   const h=getHistory(); if(!h[0]) return; const currentId=h[0];
-  if(document.hidden){ playAudioFallback(currentId); } // background: audio only
-  else{ resumeVideo(currentId); } // foreground: normal iframe
+  if(document.hidden){
+    // Auto PiP on Android
+    if('pictureInPictureEnabled' in document && iframe.requestPictureInPicture){
+      try{ await iframe.requestPictureInPicture(); }catch(e){ playAudioFallback(currentId); }
+    }else{
+      playAudioFallback(currentId); // fallback for devices without PiP
+    }
+  }else{
+    // Resume normal video when foreground
+    if(document.pictureInPictureElement){ await document.exitPictureInPicture().catch(()=>{}); }
+    resumeVideo(currentId);
+  }
 });
 
 // Render history
@@ -160,14 +169,14 @@ async function renderHistory(){
 }
 renderHistory();
 
-// Install button logic
+// Install button
 const installBtn=document.getElementById('installBtn');
-function updateInstallButton(){ const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; const installedFlag = localStorage.getItem('pwa_installed'); installBtn.hidden = isStandalone || installedFlag === 'yes'; }
+function updateInstallButton(){const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;const installedFlag=localStorage.getItem('pwa_installed'); installBtn.hidden=isStandalone||installedFlag==='yes';}
 updateInstallButton();
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; installBtn.hidden=false; });
-installBtn.addEventListener('click',async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const choice = await deferredPrompt.userChoice; if(choice.outcome==='accepted'){ installBtn.hidden=true; localStorage.setItem('pwa_installed','yes'); } deferredPrompt=null; });
-window.addEventListener('appinstalled',()=>{ installBtn.hidden=true; localStorage.setItem('pwa_installed','yes'); });
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;installBtn.hidden=false;});
+installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();const choice=await deferredPrompt.userChoice;if(choice.outcome==='accepted'){installBtn.hidden=true;localStorage.setItem('pwa_installed','yes');}deferredPrompt=null;});
+window.addEventListener('appinstalled',()=>{installBtn.hidden=true;localStorage.setItem('pwa_installed','yes');});
 </script>
 </body>
 </html>
