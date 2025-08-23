@@ -1,8 +1,8 @@
 {
   "name": "YouTube PWA Player",
   "short_name": "YT Player",
-  "start_url": "/youtube-pwa/?source=pwa",
-  "scope": "/youtube-pwa/",
+  "start_url": "/Testpwa/?source=pwa",
+  "scope": "/Testpwa/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
