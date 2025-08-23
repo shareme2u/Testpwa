@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>YouTube PWA Player</title>
-<link rel="manifest" href="./manifest.json" />
+<title>Testpwa Player</title>
+<link rel="manifest" href="/Testpwa/manifest.json" />
 <meta name="theme-color" content="#000000" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <style>
@@ -138,8 +138,8 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 <body>
 
 <header>
-  <img src="./icon-192.png" alt="" width="28" height="28" style="border-radius:6px" />
-  <h1>YouTube PWA Player</h1>
+  <img src="/Testpwa/icon-192.png" alt="Testpwa" width="28" height="28" style="border-radius:6px" />
+  <h1>Testpwa Player</h1>
 </header>
 
 <div class="controls">
@@ -156,7 +156,7 @@ button:disabled { opacity: .6; cursor: not-allowed; }
 
 <div id="historyList"></div>
 
-<button id="installBtn" class="secondary" hidden>Install YouTube PWA</button>
+<button id="installBtn" class="secondary" hidden>Install Testpwa</button>
 
 <script>
 const urlInput = document.getElementById("urlInput");
@@ -167,7 +167,8 @@ const iframe = document.getElementById("player");
 const installBtn = document.getElementById("installBtn");
 const resumeOverlay = document.getElementById("resumeOverlay");
 
-const HISTORY_KEY = "yt_history";
+const HISTORY_KEY = "testpwa_history";
+
 function getHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY))||[] }catch{return[]} }
 function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
 
@@ -198,7 +199,7 @@ function extractVideoId(url){
 function loadVideoFromUrl(u){
   const id=extractVideoId(u);
   if(!id) return alert("Invalid YouTube link.");
-  urlInput.value=""; // clear URL after play
+  urlInput.value="";
   loadVideoFromId(id);
 }
 
@@ -207,6 +208,7 @@ function loadVideoFromId(id){
   const video=history.find(v=>v.id===id);
   const startTime=video?.time||0;
   iframe.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1&start=${startTime}`;
+  resumeOverlay.textContent = '0s';
   addToHistory(id,startTime);
 }
 
@@ -239,7 +241,7 @@ async function renderHistory(){
   }
 }
 
-// Update resume overlay
+// Update resume overlay every 5 seconds
 setInterval(()=>{
   const h=getHistory();
   if(!iframe.src) return;
