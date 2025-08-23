@@ -1,6 +1,6 @@
 {
-  "name": "YouTube PWA Player",
-  "short_name": "YT Player",
+  "name": "YouTube PWA Player1",
+  "short_name": "YT Player1",
   "start_url": "/Testpwa/?source=pwa",
   "scope": "/Testpwa/",
   "display": "standalone",
