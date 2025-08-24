@@ -1,18 +1,18 @@
-// /Testpwa/service-worker.js
-const NAME = "ytpwa-v1";
-const BASE = "/Testpwa";
-const ASSETS = [
-  `${BASE}/`,
-  `${BASE}/index.html`,
-  `${BASE}/manifest.json`,
-  `${BASE}/icon-192.png`,
-  `${BASE}/icon-512.png`,
-  `${BASE}/service-worker.js`
-];
+// service-worker.js
+const CACHE_NAME = "testpwa-cache-v1";
+const OFFLINE_URL = "/Testpwa/index.html";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll([
+        "/Testpwa/",
+        "/Testpwa/index.html",
+        "/Testpwa/manifest.json",
+        "/Testpwa/icon-192.png",
+        "/Testpwa/icon-512.png"
+      ]);
+    })
   );
   self.skipWaiting();
 });
@@ -20,23 +20,28 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k === NAME ? null : caches.delete(k))))
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
-  const { request } = event;
-
-  // Only handle GET
-  if (request.method !== "GET") return;
-
-  // Cache-first for same-origin assets under /Testpwa
-  if (new URL(request.url).origin === self.location.origin &&
-      new URL(request.url).pathname.startsWith(BASE)) {
+  if (event.request.mode === "navigate") {
     event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request).catch(() => caches.match(`${BASE}/index.html`)))
+      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(
+        (response) => response || fetch(event.request)
+      )
     );
   }
 });
