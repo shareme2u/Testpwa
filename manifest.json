@@ -1,36 +1,68 @@
 {
-  "name": "YouTube PWA Player1",
-  "short_name": "YT Player1",
-  "start_url": "/Testpwa/?source=pwa",
-  "scope": "/Testpwa/",
+  "id": "/",
+  "name": "YouTube PWA Player",
+  "short_name": "YT Player",
+  "description": "A lightweight YouTube PWA player that lets you search, play, and save videos with history and offline support.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "scope_extensions": [
+    {
+      "origin": "https://shareme2u.github.io"
+    }
+  ],
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "en",
   "icons": [
     {
-      "src": "/Testpwa/icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/Testpwa/icon-192-maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/Testpwa/icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/Testpwa/icon-512-maskable.png",
+      "src": "/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshot2.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "entertainment",
+    "video",
+    "music"
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "iarc_rating_id": "pending"
 }
