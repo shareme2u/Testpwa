@@ -1,10 +1,10 @@
 {
-  "id": "/youtube-pwa/",
+  "id": "/",
   "name": "YouTube PWA Player",
   "short_name": "YT Player",
   "description": "A lightweight YouTube PWA player that lets you search, play, and save videos with history and offline support.",
-  "start_url": "/youtube-pwa/?source=pwa",
-  "scope": "/youtube-pwa/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
@@ -13,25 +13,25 @@
   "lang": "en",
   "icons": [
     {
-      "src": "/youtube-pwa/icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/youtube-pwa/icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/youtube-pwa/icon-maskable-192.png",
+      "src": "/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/youtube-pwa/icon-maskable-512.png",
+      "src": "/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -39,12 +39,12 @@
   ],
   "screenshots": [
     {
-      "src": "/youtube-pwa/screenshot1.png",
+      "src": "/screenshot1.png",
       "sizes": "1080x1920",
       "type": "image/png"
     },
     {
-      "src": "/youtube-pwa/screenshot2.png",
+      "src": "/screenshot2.png",
       "sizes": "1080x1920",
       "type": "image/png"
     }
@@ -57,5 +57,6 @@
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "related_applications": []
 }
