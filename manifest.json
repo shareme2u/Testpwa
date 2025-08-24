@@ -1,12 +1,17 @@
 {
-  "name": "Testpwa Player",
-  "short_name": "Testpwa",
+  "name": "YouTube PWA Player",
+  "short_name": "YT Player",
+  "description": "A simple YouTube PWA player with history and offline support",
+  "id": "/Testpwa/",
   "start_url": "/Testpwa/?source=pwa",
   "scope": "/Testpwa/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "icons": [
     {
       "src": "/Testpwa/icon-192.png",
@@ -14,9 +19,10 @@
       "type": "image/png"
     },
     {
-      "src": "/Testpwa/icon-192.png",
+      "src": "/Testpwa/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
+  
 }
